@@ -1,0 +1,27 @@
+﻿@html.extend("vash/layout", function(model) {
+	@html.block("content", function(model) {
+		
+		@if (model.error) {
+			<p class="text-error"> Error occurred: @model.error </p>
+		}
+		<div class="row">
+			<div class="list-group col-lg-6">
+			@model.categories.forEach(function(category){
+				<a href="/notes/@category.name" class="list-group-item list-group-item-info"><span class="badge"> @(category.notes ? category.notes.length : 0)</span> @category.name</a>
+			})
+			</div>	
+		</div>
+
+		@if(model.duplicateErr) {
+			<p class="text-error"> @model.duplicateErr </p>
+		}
+
+		<div class="row">
+			<form method="post" action="/newCategory" role="form" class="form-inline">
+				<input name="categoryName" type="text" class="form-control" placeholder="New category name.." />
+				<input type="submit" text="Create Category" class="btn btn-primary"/>
+			</form>
+		</div>
+
+	})
+})
